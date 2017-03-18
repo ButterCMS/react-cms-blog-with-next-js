@@ -8,7 +8,7 @@ export default class extends React.Component {
   static async getInitialProps({ query }) {
     let page = query.page || 1;
 
-    const resp = await butter.post.list({page: page, page_size: 10})    
+    const resp = await butter.post.list({page: page, page_size: 10})
     return resp.data;
   }
   render() {
@@ -16,9 +16,9 @@ export default class extends React.Component {
 
     return (
       <div>
-        {this.props.data.map((post) => {
+        {this.props.data.map((post, key) => {
           return (
-            <div><a href={`/post/${post.slug}`}>{post.title}</a></div>
+            <div key={key}><a href={`/post/${post.slug}`}>{post.title}</a></div>
           )
         })}
 
@@ -26,7 +26,7 @@ export default class extends React.Component {
 
         <div>
           {previous_page && <Link href={`/?page=${previous_page}`}><a>Prev</a></Link>}
-        
+
           {next_page && <Link href={`/?page=${next_page}`}><a>Next</a></Link>}
         </div>
       </div>

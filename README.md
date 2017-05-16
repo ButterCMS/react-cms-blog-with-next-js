@@ -202,3 +202,7 @@ Restart the server and inspect the HTML source of a post to verify that tags are
 Next.js is a powerful framework that makes it easy to build universal React apps. With ButterCMS you can quickly build CMS-powered blogs and websites with React and Node.js.
 
 We hope you enjoyed this tutorial. If you have any questions about setting up your ButterCMS-powered Next.js/React app reach out to me at roger@buttercms.com or on Twitter.
+
+### Other
+
+View ReactJS [Blog engine](https://buttercms.com/react-blog-engine/) and [Full CMS](https://buttercms.com/react-cms/) for other examples of using ButterCMS with ReactJS.

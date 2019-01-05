@@ -1,9 +1,12 @@
 const next = require('next')
 const express = require('express')
+const Butter = require('buttercms')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const port = 3000
+
+const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
 
 app.prepare().then(() => {
   const server = express()
@@ -39,6 +42,24 @@ app.prepare().then(() => {
       .catch((e) => {
         res.status(500).end()
       })
+  })
+
+  server.get('/sitemap', (req, res) => {
+    butter.feed.retrieve('sitemap').then((s) => {
+      res.send(s.data.data)
+    })
+  })
+
+  server.get('/atom', (req, res) => {
+    butter.feed.retrieve('atom').then((s) => {
+      res.send(s.data.data)
+    })
+  })
+
+  server.get('/rss', (req, res) => {
+    butter.feed.retrieve('rss').then((s) => {
+      res.send(s.data.data)
+    })
   })
 
   server.get('*', (req, res) => {

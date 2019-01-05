@@ -393,6 +393,32 @@ server.post('/webhook-receiver', (req, res) => {
 
 The route will call the `app.prepare` function, which reloads the Next.js application.
 
+## RSS, Atom, and Sitemap
+
+We can fetch the RSS, Atom, and Sitemap feeds using the ButterCMS API, and pipe the response to routes on our server. Create the `/sitemap`, `/rss`, and `/atom` routes inside `server.js`
+
+```js
+server.get('/sitemap', (req, res) => {
+  butter.feed.retrieve('sitemap').then((s) => {
+    res.send(s.data.data)
+  })
+})
+
+server.get('/atom', (req, res) => {
+  butter.feed.retrieve('atom').then((s) => {
+    res.send(s.data.data)
+  })
+})
+
+server.get('/rss', (req, res) => {
+  butter.feed.retrieve('rss').then((s) => {
+    res.send(s.data.data)
+  })
+})
+```
+
+These routes will also update dynamically, everytime new content is added, or updated.
+
 ## Wrap up
 
 Next.js is a powerful framework that makes it easy to build universal React apps. With ButterCMS you can quickly build CMS-powered blogs and websites with React and Node.js.

@@ -1,6 +1,5 @@
 const next = require('next')
 const express = require('express')
-
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
@@ -27,6 +26,19 @@ app.prepare().then(() => {
 
   server.get('/products/:slug', (req, res) => {
     return app.render(req, res, '/product', { slug: req.params.slug })
+  })
+
+  server.post('/webhook-receiver', (req, res) => {
+    console.log('a post has been modified')
+    app
+      .prepare()
+      .then(() => {
+        console.log('app refreshed')
+        res.end()
+      })
+      .catch((e) => {
+        res.status(500).end()
+      })
   })
 
   server.get('*', (req, res) => {

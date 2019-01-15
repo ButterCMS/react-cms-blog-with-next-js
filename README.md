@@ -14,10 +14,10 @@ Create a new directory for your app and add a package.json file:
 }
 ```
 
-Next, install Next.js and React. As of the time of this writing, we'll want to install the Next.js for custom routing we'll use later:
+Next, install Next.js, React, and the ButterCMS API. As of the time of this writing, we'll want to install the Next.js for custom routing we'll use later:
 
 ```
-npm install next@beta react react-dom --save
+npm install next@beta react react-dom buttercms  --save
 ```
 
 Then add a script to your package.json:
@@ -48,13 +48,157 @@ export default () => (
 )
 ```
 
-## Fetching blog posts from ButterCMS
+## Pages
 
-First install the ButterCMS Node.js API client and restart your server:
+### Integrate into your application
+
+With our page defined, the ButterCMS API will return it in JSON format like this:
+
+```json
+{
+    "data": {
+        "slug": "acme-co",
+        "fields": {
+            "facebook_open_graph_title": "Acme Co loves ButterCMS",
+            "seo_title": "Acme Co Customer Case Study",
+            "headline": "Acme Co saved 200% on Anvil costs with ButterCMS",
+            "testimonial": "<p>We've been able to make anvils faster than ever before! - <em>Chief Anvil Maker</em></p>\r\n<p><img src=\"https://cdn.buttercms.com/NiA3IIP3Ssurz5eNJ15a\" alt=\"\" caption=\"false\" width=\"249\" height=\"249\" /></p>",
+            "customer_logo": "https://cdn.buttercms.com/c8oSTGcwQDC5I58km5WV",
+        }
+    }
+}
+```
+
+Create a `pages/case-study.js` file:
+
+```jsx
+import React from 'react'
+import Butter from 'buttercms'
+import Head from 'next/head'
+
+const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
+
+export default class extends React.Component {
+  static async getInitialProps ({ query }) {
+    const resp = await butter.page.retrieve('customer_case_study', query.slug)
+    return resp.data
+  }
+  render () {
+    const product = this.props.data
+    const { seo_title: seoTitle, customer_logo: customerLogo, headline, testimonial } = product.fields
+
+    return (
+      <div>
+        <Head>
+          <title>{seoTitle}</title>
+        </Head>
+
+        <div>
+          <img src={customerLogo} alt='' height='124' width='124' />
+        </div>
+        <h1>{headline}</h1>
+        <div dangerouslySetInnerHTML={{ __html: testimonial }} />
+      </div>
+    )
+  }
+}
 
 ```
-npm install buttercms --save
+
+### Update the routes in your app to route to the specified components
+
+Finally, we add the route for the page to `server.js`:
+
+```js
+server.get('/case-studies/:slug', (req, res) => {
+  return app.render(req, res, '/case-study', { slug: req.params.slug })
+})
 ```
+
+### Setup the Customers Page to list all our customers.
+
+Create a new file `pages/case-studies.js`. In this file, we should:
+
+1. Initialize the butterCMS library
+2. On the `getInitialProps` hook, fetch the list of case studies
+3. Return the response data as the component props
+
+```jsx
+import React from 'react'
+import Butter from 'buttercms'
+
+const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
+
+export default class extends React.Component {
+  static async getInitialProps ({ query }) {
+    const resp = await butter.page.list('customer_case_study')
+    return resp.data
+  }
+  render () {
+    return (
+      <div>
+        {this.props.data.map((caseStudy, key) => {
+          return (
+            <div key={key}>
+              <img src={caseStudy.fields.customer_logo} height='40' width='40' />
+              <a href={`/case-studies/${caseStudy.slug}`}>{caseStudy.fields.headline}</a>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+}
+```
+
+There is no need to make a route for the `product.js` page, since Next.js automatically creates a page using it's convention. We can view all the products by going to the `/products` route once we start the server.
+
+## Content fields
+
+### Integrate with your app
+
+Create a new file `pages/faq.js`. In this component, we will have to fetch the FAQ content in the `getInitialProps` hook:
+
+```jsx
+import React, { Component } from 'react'
+import Butter from 'buttercms'
+
+const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
+
+class Faq extends Component {
+  static async getInitialProps () {
+    const resp = await butter.content.retrieve([ 'faq_headline', 'faq_items' ])
+    return resp.data.data
+  }
+
+  render () {
+    return (
+      <div>
+        <h1>{this.props.faq_headline}</h1>
+
+        <ul>
+          {this.props.faq_items.map((item) => {
+            return (
+              <li>
+                <h4>{item.question}</h4>
+                <p>{item.answer}</p>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  }
+}
+
+export default Faq
+```
+
+Once this is done, reload the app, and the component will automatically display on the `/faq` route. 
+
+## Blog Engine
+
+### Setup the Blog page to list all our posts.
 
 We'll load the ButterCMS package in index.js and setup a React component that fetches and displays posts:
 
@@ -100,7 +244,35 @@ With Next.js `getInitialProps` will execute on the server on initial page loads,
 
 In our `render()` method we use some clever syntax to only display pagination links only when they're applicable. Our post links will take us to a 404 – we'll get these working next.
 
-## Creating our post page
+### Setup the Blog Post page to list a single post
+
+We'll also update our post component to fetch blog posts via slug and render the title and body:
+
+```js
+import React from 'react'
+import Butter from 'buttercms'
+
+const butter = Butter('<your_api_key>')
+
+export default class extends React.Component {
+  static async getInitialProps({ query }) {
+    const resp = await butter.post.retrieve(query.slug);  
+    return resp.data;
+  }
+  render() {
+    const post = this.props.data;
+
+    return (
+      <div>
+        <h1>{post.title}</h1>
+        <div dangerouslySetInnerHTML={{__html: post.body}} />
+      </div>
+    )
+  }
+}
+```
+
+### Add routes to the server
 
 To get our post links working we need to setup dynamic routing for our blog posts. First, create a custom server `./server.js` that routes all `/posts/:slug` URLs to our post component, and the `/posts` URL to our index page:
 
@@ -132,32 +304,6 @@ app.prepare().then(() => {
     console.log(`> Ready on http://localhost:${port}`)
   })
 })
-```
-
-We'll also update our post component to fetch blog posts via slug and render the title and body:
-
-```js
-import React from 'react'
-import Butter from 'buttercms'
-
-const butter = Butter('<your_api_key>')
-
-export default class extends React.Component {
-  static async getInitialProps({ query }) {
-    const resp = await butter.post.retrieve(query.slug);  
-    return resp.data;
-  }
-  render() {
-    const post = this.props.data;
-
-    return (
-      <div>
-        <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{__html: post.body}} />
-      </div>
-    )
-  }
-}
 ```
 
 Finally, update our `package.json` start script to use our customer server and restart:
@@ -260,6 +406,33 @@ export default class extends React.Component {
 
 The links on these pages will be to the individual posts themselves.
 
+## RSS, Atom, and Sitemap
+
+We can fetch the RSS, Atom, and Sitemap feeds using the ButterCMS API, and pipe the response to routes on our server. Create the `/sitemap`, `/rss`, and `/atom` routes inside `server.js`
+
+```js
+server.get('/sitemap', (req, res) => {
+  butter.feed.retrieve('sitemap').then((s) => {
+    res.send(s.data.data)
+  })
+})
+
+server.get('/atom', (req, res) => {
+  butter.feed.retrieve('atom').then((s) => {
+    res.send(s.data.data)
+  })
+})
+
+server.get('/rss', (req, res) => {
+  butter.feed.retrieve('rss').then((s) => {
+    res.send(s.data.data)
+  })
+})
+```
+
+These routes will also update dynamically, everytime new content is added, or updated.
+
+
 ### SEO
 
 Next.js provides a `<Head>` component for setting HTML titles and meta tags. Add `import Head from 'next/head'` to the top of `./pages/post.js` and use the component in the `render()` method:
@@ -284,87 +457,6 @@ render() {
 ```
 
 Restart the server and inspect the HTML source of a post to verify that tags are getting set correctly.
-
-## Custom page types
-
-ButterCMS allows you to create pages with templates for custom use cases. For example, consider this "product" page template created on the ButterCMS dashboard:
-
-![product page](images/product-page.png)
-
-This page has 3 fields: `title`, `description` and `price`. We can create a React component to display the product and its details. This will reside in the `pages/product.js` file:
-
-```js
-import React from 'react'
-import Butter from 'buttercms'
-import Head from 'next/head'
-
-const butter = Butter('<your_api_key>')
-
-export default class extends React.Component {
-  static async getInitialProps ({ query }) {
-    const resp = await butter.page.retrieve('product', query.slug)
-    return resp.data
-  }
-  render () {
-    const product = this.props.data
-    const { title, description, price } = product.fields
-
-    return (
-      <div>
-        <Head>
-          <title>{title}</title>
-        </Head>
-
-        <h1>{title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: description }} />
-        <span>
-          <strong>Price : </strong> {price}
-        </span>
-      </div>
-    )
-  }
-}
-```
-
-We can then build a page to display all the products present. Create the file `pages/products.js`:
-
-```js
-import React from 'react'
-import Link from 'next/link'
-import Butter from 'buttercms'
-
-const butter = Butter('<your_api_key>')
-
-export default class extends React.Component {
-  static async getInitialProps ({ query }) {
-    const resp = await butter.page.list('product')
-    return resp.data
-  }
-  render () {
-    return (
-      <div>
-        {this.props.data.map((product, key) => {
-          return (
-            <div key={key}>
-              <a href={`/product/${product.slug}`}>{product.fields.title}</a>
-            </div>
-          )
-        })}
-      </div>
-    )
-  }
-}
-```
-
-Finally, we add the route for the product page to `server.js`:
-
-```js
-server.get('/products/:slug', (req, res) => {
-  return app.render(req, res, '/product', { slug: req.params.slug })
-})
-```
-
-There is no need to make a route for the `product.js` page, since Next.js automatically creates a page using it's convention. We can view all the products by going to the `/products` route once we start the server.
 
 ## Reloading the Next.js app on adding a new page
 
@@ -392,32 +484,6 @@ server.post('/webhook-receiver', (req, res) => {
 ```
 
 The route will call the `app.prepare` function, which reloads the Next.js application.
-
-## RSS, Atom, and Sitemap
-
-We can fetch the RSS, Atom, and Sitemap feeds using the ButterCMS API, and pipe the response to routes on our server. Create the `/sitemap`, `/rss`, and `/atom` routes inside `server.js`
-
-```js
-server.get('/sitemap', (req, res) => {
-  butter.feed.retrieve('sitemap').then((s) => {
-    res.send(s.data.data)
-  })
-})
-
-server.get('/atom', (req, res) => {
-  butter.feed.retrieve('atom').then((s) => {
-    res.send(s.data.data)
-  })
-})
-
-server.get('/rss', (req, res) => {
-  butter.feed.retrieve('rss').then((s) => {
-    res.send(s.data.data)
-  })
-})
-```
-
-These routes will also update dynamically, everytime new content is added, or updated.
 
 ## Wrap up
 

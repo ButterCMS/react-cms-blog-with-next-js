@@ -27,8 +27,8 @@ app.prepare().then(() => {
     return app.render(req, res, '/post', { slug: req.params.slug })
   })
 
-  server.get('/products/:slug', (req, res) => {
-    return app.render(req, res, '/product', { slug: req.params.slug })
+  server.get('/case-studies/:slug', (req, res) => {
+    return app.render(req, res, '/case-study', { slug: req.params.slug })
   })
 
   server.post('/webhook-receiver', (req, res) => {

@@ -76,7 +76,7 @@ import React from 'react'
 import Butter from 'buttercms'
 import Head from 'next/head'
 
-const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
+const butter = Butter('your_api_token')
 
 export default class extends React.Component {
   static async getInitialProps ({ query }) {
@@ -127,7 +127,7 @@ Create a new file `pages/case-studies.js`. In this file, we should:
 import React from 'react'
 import Butter from 'buttercms'
 
-const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
+const butter = Butter('your_api_token')
 
 export default class extends React.Component {
   static async getInitialProps ({ query }) {
@@ -163,7 +163,7 @@ Create a new file `pages/faq.js`. In this component, we will have to fetch the F
 import React, { Component } from 'react'
 import Butter from 'buttercms'
 
-const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
+const butter = Butter('your_api_token')
 
 class Faq extends Component {
   static async getInitialProps () {

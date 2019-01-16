@@ -6,7 +6,7 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 const port = 3000
 
-const butter = Butter('f148a1e8d384482bf3e5aa9e2b3a7af5dc62c734')
+const butter = Butter('your_api_token')
 
 app.prepare().then(() => {
   const server = express()

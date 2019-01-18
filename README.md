@@ -493,4 +493,5 @@ We hope you enjoyed this tutorial. If you have any questions about setting up yo
 
 ## Other
 
-View ReactJS [Blog engine](https://buttercms.com/react-blog-engine/) and [Full CMS](https://buttercms.com/react-cms/) for other examples of using ButterCMS with ReactJS.
+View ReactJS [Blog engine](https://buttercms.com/react-blog-engine/) and [Full CMS](https://buttercms.com/react-cms/) for other examples of using ButterCMS with ReactJS. And check out [Next.js Blog engine](https://buttercms.com/nextjs-blog-engine/) and [Next.js CMS](https://buttercms.com/nextjs-cms/) for other Next.js examples.
+

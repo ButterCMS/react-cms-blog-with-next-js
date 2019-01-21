@@ -151,7 +151,7 @@ export default class extends React.Component {
 }
 ```
 
-There is no need to make a route for the `product.js` page, since Next.js automatically creates a page using it's convention. We can view all the products by going to the `/products` route once we start the server.
+There is no need to make a route for the `case-study.js` page, since Next.js automatically creates a page using it's convention. We can view all the products by going to the `/case-study` route once we start the server.
 
 ## Content fields
 

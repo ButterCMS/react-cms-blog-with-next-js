@@ -1,4 +1,4 @@
-import { getRssData } from "../lib/api";
+import { getRssData } from "@/lib/api";
 
 export default function Rss({ rss }) {
   return rss;

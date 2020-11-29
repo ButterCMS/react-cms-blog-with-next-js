@@ -1,4 +1,4 @@
-import { getAtomData } from "../lib/api";
+import { getAtomData } from "@/lib/api";
 
 export default function Atom({ atom }) {
   return atom;

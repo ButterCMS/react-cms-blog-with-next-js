@@ -1,4 +1,4 @@
-import { getSitemapData } from "../lib/api";
+import { getSitemapData } from "@/lib/api";
 
 export default function Sitemap({ sitemap }) {
   return sitemap;

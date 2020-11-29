@@ -1,25 +1,34 @@
-import React from 'react'
-import Butter from 'buttercms'
+import Link from "next/link";
+import Head from "next/head";
 
-const butter = Butter('your_api_token')
+import Layout from "@/components/layout";
+import Container from "@/components/container";
+import { getPagesByType } from "@/lib/api";
 
-export default class extends React.Component {
-  static async getInitialProps ({ query }) {
-    const resp = await butter.page.list('customer_case_study')
-    return resp.data
-  }
-  render () {
-    return (
-      <div>
-        {this.props.data.map((caseStudy, key) => {
+export default function caseStudies({ pages }) {
+  return (
+    <Layout>
+      <Container>
+        <Head>
+          <title>Case studies</title>
+        </Head>
+        {pages.map(({ slug, fields }, key) => {
           return (
             <div key={key}>
-              <img src={caseStudy.fields.customer_logo} height='40' width='40' />
-              <a href={`/case-studies/${caseStudy.slug}`}>{caseStudy.fields.headline}</a>
+              <img src={fields.customer_logo} height="40" width="40" />
+              <Link href={`/case-studies/${slug}`}>
+                <a>{fields.headline}</a>
+              </Link>
             </div>
-          )
+          );
         })}
-      </div>
-    )
-  }
+      </Container>
+    </Layout>
+  );
+}
+
+export async function getStaticProps() {
+  const pages = await getPagesByType("customer_case_study");
+
+  return { props: { pages } };
 }

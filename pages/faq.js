@@ -1,32 +1,35 @@
-import React, { Component } from 'react'
-import Butter from 'buttercms'
+import Head from "next/head";
 
-const butter = Butter('your_api_token')
+import Layout from "@/components/layout";
+import Container from "@/components/container";
+import { getCollectionsItems } from "@/lib/api";
 
-class Faq extends Component {
-  static async getInitialProps () {
-    const resp = await butter.content.retrieve([ 'faq_headline', 'faq_items' ])
-    return resp.data.data
-  }
-
-  render () {
-    return (
-      <div>
-        <h1>{this.props.faq_headline}</h1>
-
-        <ul>
-          {this.props.faq_items.map((item) => {
-            return (
-              <li>
-                <h4>{item.question}</h4>
-                <p>{item.answer}</p>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    )
-  }
+export default function FAQ({ collectionsItems }) {
+  return (
+    <Layout>
+      <Container>
+        <Head>
+          <title>FAQ</title>
+        </Head>
+        <>
+          <h1>FAQ</h1>
+          <ul>
+            {collectionsItems.faq_items.map(({ question, answer }, key) => {
+              return (
+                <li key={key}>
+                  <h4>{question}</h4>
+                  <p>{answer}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      </Container>
+    </Layout>
+  );
 }
 
-export default Faq
+export async function getStaticProps() {
+  const collectionsItems = await getCollectionsItems(["faq_items"]);
+  return { props: { collectionsItems } };
+}

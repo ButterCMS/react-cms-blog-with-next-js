@@ -7,7 +7,7 @@ import Container from "@/components/container";
 import PostBody from "@/components/post-body";
 import PostHeader from "@/components/post-header";
 import Layout from "@/components/layout";
-import { getPostsData, getPost } from "@/lib/api";
+import { getAllPostsPaginated, getPost } from "@/lib/api";
 
 export default function Post({ post }) {
   const router = useRouter();
@@ -64,9 +64,14 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const { posts } = await getPostsData();
+  const allPosts = await getAllPostsPaginated();
+  const paths = Object.entries(allPosts).reduce((res, [pageIndex, posts]) => {
+    const pagePaths = posts.map((post) => `/posts/${post.slug}`);
+    return [...res, ...pagePaths];
+  }, []);
+
   return {
-    paths: posts?.map((post) => `/posts/${post.slug}`) || [],
+    paths,
     fallback: true,
   };
 }

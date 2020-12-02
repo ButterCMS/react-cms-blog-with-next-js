@@ -1,11 +1,12 @@
 import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import ErrorPage from "next/error";
+import { useRouter } from "next/router";
 
 import Layout from "@/components/layout";
 import Container from "@/components/container";
+import PostPreview from "@/components/post-preview";
 import { getCategories, getCategoryWithPosts } from "@/lib/api";
+import Header from "@/components/header";
 
 export default function Category({ name, slug, recentPosts }) {
   const router = useRouter();
@@ -22,17 +23,31 @@ export default function Category({ name, slug, recentPosts }) {
           <div>Loading…</div>
         ) : (
           <article>
-            <h1>{name}</h1>
-            <div>
-              {recentPosts.map(({ slug: postSlug, title: postTitle }, key) => {
-                return (
-                  <div key={key}>
-                    <Link href={`/posts/${postSlug}`}>
-                      <a>{postTitle}</a>
-                    </Link>
-                  </div>
-                );
-              })}
+            <Header title={`Blog posts with category "${name}"`}></Header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 md:col-gap-16 lg:col-gap-32 row-gap-20 md:row-gap-32 mb-10">
+              {recentPosts.map(
+                ({
+                  slug: postSlug,
+                  title: postTitle,
+                  featured_image: featuredImage,
+                  published,
+                  author,
+                  summary,
+                }) => {
+                  return (
+                    <PostPreview
+                      key={postSlug}
+                      title={postTitle}
+                      coverImage={featuredImage}
+                      date={published}
+                      author={author}
+                      slug={postSlug}
+                      excerpt={summary}
+                    />
+                  );
+                }
+              )}
             </div>
           </article>
         )}

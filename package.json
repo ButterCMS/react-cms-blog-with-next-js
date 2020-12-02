@@ -1,13 +1,15 @@
 {
   "name": "react-blog",
   "scripts": {
-    "start": "node server.js"
+    "start": "next start",
+    "dev": "next",
+    "build": "next build"
   },
   "dependencies": {
-    "buttercms": "^1.0.10",
-    "express": "^4.16.4",
-    "next": "^2.0.0-beta.36",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "buttercms": "^1.2.2",
+    "date-fns": "^2.14.0",
+    "next": "latest",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

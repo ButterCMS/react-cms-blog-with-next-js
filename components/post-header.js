@@ -1,9 +1,17 @@
-import Avatar from "../components/avatar";
-import Date from "../components/date";
-import CoverImage from "../components/cover-image";
-import PostTitle from "../components/post-title";
+import Link from "next/link";
 
-export default function PostHeader({ title, coverImage, date, author }) {
+import Avatar from "@/components/avatar";
+import Date from "@/components/date";
+import CoverImage from "@/components/cover-image";
+import PostTitle from "@/components/post-title";
+
+export default function PostHeader({
+  title,
+  coverImage,
+  date,
+  author,
+  categories,
+}) {
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -22,6 +30,15 @@ export default function PostHeader({ title, coverImage, date, author }) {
             name={`${author.first_name} ${author.last_name}`}
             picture={author.profile_image}
           />
+        </div>
+        <div className="mb-6 text-lg">
+          {categories.map(({ name, slug }) => {
+            return (
+              <Link href={`/posts/category/${slug}`} key={slug}>
+                <a className="mr-2 hover:underline leading-snug">{name}</a>
+              </Link>
+            );
+          })}
         </div>
         <div className="mb-6 text-lg">
           <Date dateString={date} />

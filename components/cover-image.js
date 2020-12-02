@@ -10,7 +10,7 @@ export default function CoverImage({ title, url, slug }) {
           </a>
         </Link>
       ) : (
-        <img src={url} alt={title} />
+        <img className="rounded-lg" src={url} alt={title} />
       )}
     </div>
   );

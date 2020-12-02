@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import Head from "next/head";
-import Link from "next/link";
 
 import Container from "@/components/container";
 import PostBody from "@/components/post-body";
@@ -33,18 +32,9 @@ export default function Post({ post }) {
                 coverImage={post.featured_image}
                 date={post.published}
                 author={post.author}
+                categories={post.categories}
               />
               <PostBody content={post.body} />
-              <h3>Categories</h3>
-              {post.categories.map(({ name, slug }, key) => {
-                return (
-                  <div key={key}>
-                    <Link href={`/posts/category/${slug}`}>
-                      <a>{name}</a>
-                    </Link>
-                  </div>
-                );
-              })}
             </article>
           </>
         )}

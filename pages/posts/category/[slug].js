@@ -9,7 +9,6 @@ import { getCategories, getCategoryWithPosts } from "@/lib/api";
 
 export default function Category({ name, slug, recentPosts }) {
   const router = useRouter();
-  console.log(!router.isFallback, slug);
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />;
   }
@@ -52,9 +51,7 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const categories = await getCategories();
-  console.log(
-    categories?.map((category) => `/posts/category/${category.slug}`) || []
-  );
+
   return {
     paths:
       categories?.map((category) => `/posts/category/${category.slug}`) || [],

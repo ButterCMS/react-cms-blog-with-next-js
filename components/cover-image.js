@@ -6,7 +6,7 @@ export default function CoverImage({ title, url, slug }) {
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a aria-label={title}>
-            <img class="rounded-lg" src={url} alt={title} />
+            <img className="rounded-lg" src={url} alt={title} />
           </a>
         </Link>
       ) : (

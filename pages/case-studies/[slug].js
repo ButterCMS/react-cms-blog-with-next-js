@@ -38,7 +38,7 @@ export default function caseStudy({
             <Header title={headline}></Header>
             <div className="grid grid-flow-col auto-cols-max gap-4 mb-5">
               <img
-                class="rounded-lg"
+                className="rounded-lg"
                 style={{ maxHeight: "200px" }}
                 src={customerLogo}
               />
@@ -52,7 +52,7 @@ export default function caseStudy({
               </div>
             </div>
             <div
-              class="mb-10"
+              className="mb-10"
               dangerouslySetInnerHTML={{ __html: studyBody }}
             />
           </article>

@@ -23,7 +23,7 @@ export default function caseStudies({ pages }) {
               className="grid grid-flow-col auto-rows-max gap-4 mb-5"
             >
               <img
-                class="rounded-lg"
+                className="rounded-lg"
                 style={{ maxHeight: "150px" }}
                 src={fields.customer_logo}
               />

@@ -10,7 +10,12 @@ export default function Layout({ children }) {
             className="relative flex items-center justify-between sm:h-10 lg:justify-start"
             aria-label="Global"
           >
-            <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+            <div className="ml-10 pr-4 space-x-8">
+              <Link href="/">
+                <a className="font-medium text-gray-500 hover:text-gray-900">
+                  Home
+                </a>
+              </Link>
               <Link href="/posts">
                 <a className="font-medium text-gray-500 hover:text-gray-900">
                   Blog

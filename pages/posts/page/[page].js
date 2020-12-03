@@ -44,7 +44,7 @@ export default function Posts({ posts, prevPage, nextPage }) {
                 />
               ))}
             </div>
-            <div class="text-right mb-10">
+            <div className="text-right mb-10">
               <nav
                 className="relative z-0 inline-flex shadow-sm -space-x-px"
                 aria-label="Pagination"

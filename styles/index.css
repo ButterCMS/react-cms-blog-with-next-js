@@ -5,3 +5,7 @@
 .grayscale {
   filter: grayscale(1);
 }
+
+iframe {
+  max-width: 100%;
+}

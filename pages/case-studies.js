@@ -30,21 +30,22 @@ export default function caseStudies({ pages }) {
                   height: "300px",
                 }}
               >
-                <Image
-                  alt={fields.headline}
-                  src={fields.customer_logo}
-                  layout="fill"
-                  objectFit="cover"
-                  quality={100}
-                  className="rounded-lg"
-                />
+                <Link href={`/case-studies/${slug}`}>
+                  <a>
+                    <Image
+                      alt={fields.headline}
+                      src={fields.customer_logo}
+                      layout="fill"
+                      objectFit="cover"
+                      quality={100}
+                      className="rounded-lg"
+                    />
+                  </a>
+                </Link>
               </div>
               <div>
                 <h3 className="text-3xl mb-3 mt-3 leading-snug">
-                  <Link
-                    as={`/case-studies/${slug}`}
-                    href="/case-studies/[slug]"
-                  >
+                  <Link href={`/case-studies/${slug}`}>
                     <a className="hover:underline">{fields.headline}</a>
                   </Link>
                 </h3>

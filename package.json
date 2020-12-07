@@ -6,6 +6,7 @@
     "build": "next build"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.3.1",
     "buttercms": "^1.2.2",
     "date-fns": "^2.14.0",
     "next": "latest",

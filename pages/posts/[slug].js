@@ -54,7 +54,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const allPosts = await getAllPostsPaginated();
+  const allPosts = await getAllPostsPaginated(100);
   const paths = Object.entries(allPosts).reduce((res, [pageIndex, posts]) => {
     const pagePaths = posts.map((post) => `/posts/${post.slug}`);
     return [...res, ...pagePaths];

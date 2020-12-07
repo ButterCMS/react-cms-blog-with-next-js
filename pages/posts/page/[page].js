@@ -104,6 +104,7 @@ export async function getStaticProps({ params }) {
 
   return {
     props: { posts, prevPage, nextPage },
+    revalidate: 1,
   };
 }
 

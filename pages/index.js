@@ -13,15 +13,15 @@ export default function Posts() {
           <title></title>
         </Head>
         <Header title="ButterCMS. Headless CMS you'll melt over"></Header>
-        <div className="bg-gray-50">
-          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+        <div className="bg-gray-50 mb-5 rounded-lg">
+          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:mr-5">
               <span className="block">Blog Engine</span>
               <span className="block text-indigo-600">
                 You've got better things to do than building another blog.
               </span>
             </h2>
-            <div className="mt-8 lex lg:mt-0 lg:flex-shrink-0">
+            <div className="mt-8">
               <div className="inline-flex rounded-md shadow">
                 <Link href="/posts">
                   <a className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
@@ -41,8 +41,8 @@ export default function Posts() {
           </div>
         </div>
 
-        <div className="bg-gray-50">
-          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+        <div className="bg-gray-50 mb-5 rounded-lg">
+          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:mr-5">
               <span className="block">Pages</span>
               <span className="block text-indigo-600">
@@ -50,7 +50,7 @@ export default function Posts() {
                 by using Page Types.
               </span>
             </h2>
-            <div className="mt-8 lex lg:mt-0 lg:flex-shrink-0">
+            <div className="mt-8">
               <div className="inline-flex rounded-md shadow">
                 <Link href="/case-studies">
                   <a className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
@@ -69,15 +69,15 @@ export default function Posts() {
             </div>
           </div>
         </div>
-        <div className="bg-gray-50">
-          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+        <div className="bg-gray-50 mb-5 rounded-lg">
+          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:mr-5">
               <span className="block">Collections</span>
               <span className="block text-indigo-600">
                 Create reusable promotional content and more with Collections.
               </span>
             </h2>
-            <div className="mt-8 lex lg:mt-0 lg:flex-shrink-0">
+            <div className="mt-8">
               <div className="inline-flex rounded-md shadow">
                 <Link href="/faq">
                   <a className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">

@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
+import Image from "next/image";
 
 import Layout from "@/components/layout";
 import Date from "@/components/date";
@@ -37,11 +38,22 @@ export default function caseStudy({
             </Head>
             <Header title={headline}></Header>
             <div className="grid grid-flow-col auto-cols-max gap-4 mb-5">
-              <img
-                className="rounded-lg"
-                style={{ maxHeight: "200px" }}
-                src={customerLogo}
-              />
+              <div
+                style={{
+                  position: "relative",
+                  width: "300px",
+                  height: "300px",
+                }}
+              >
+                <Image
+                  alt={name}
+                  src={customerLogo}
+                  layout="fill"
+                  objectFit="cover"
+                  quality={100}
+                  className="rounded-lg"
+                />
+              </div>
               <div>
                 <div>
                   Study date: <Date dateString={studyDate}></Date>

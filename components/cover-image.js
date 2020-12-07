@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function CoverImage({ title, url, slug }) {
   return (
@@ -6,11 +7,29 @@ export default function CoverImage({ title, url, slug }) {
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a aria-label={title}>
-            <img className="rounded-lg" src={url} alt={title} />
+            <div style={{ position: "relative", height: "300px" }}>
+              <Image
+                alt={title}
+                src={url}
+                layout="fill"
+                objectFit="cover"
+                quality={100}
+                className="rounded-lg"
+              />
+            </div>
           </a>
         </Link>
       ) : (
-        <img className="rounded-lg" width="100%" src={url} alt={title} />
+        <div style={{ position: "relative", height: "300px" }}>
+          <Image
+            alt={title}
+            src={url}
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            className="rounded-lg"
+          />
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Head from "next/head";
+import Image from "next/image";
 
 import Header from "@/components/header";
 import Layout from "@/components/layout";
@@ -22,11 +23,22 @@ export default function caseStudies({ pages }) {
               key={key}
               className="grid grid-flow-col auto-rows-max gap-4 mb-5"
             >
-              <img
-                className="rounded-lg"
-                style={{ maxHeight: "150px" }}
-                src={fields.customer_logo}
-              />
+              <div
+                style={{
+                  position: "relative",
+                  width: "300px",
+                  height: "300px",
+                }}
+              >
+                <Image
+                  alt={fields.headline}
+                  src={fields.customer_logo}
+                  layout="fill"
+                  objectFit="cover"
+                  quality={100}
+                  className="rounded-lg"
+                />
+              </div>
               <div>
                 <h3 className="text-3xl mb-3 mt-3 leading-snug">
                   <Link

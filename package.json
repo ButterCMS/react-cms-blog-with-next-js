@@ -5,6 +5,9 @@
     "dev": "next",
     "build": "next build"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "dependencies": {
     "@tailwindcss/typography": "^0.3.1",
     "autoprefixer": "^10.0.4",

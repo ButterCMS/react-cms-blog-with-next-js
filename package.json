@@ -14,7 +14,7 @@
     "buttercms": "^1.2.3",
     "date-fns": "^2.16.1",
     "next": "latest",
-    "postcss": "^8.2.10",
+    "postcss": "^8.2.13",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "tailwindcss": "^2.0.1"
